@@ -2,8 +2,11 @@ package com.andriychuk.demo.controller;
 
 import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.service.CustomUserDetailsService;
+import com.andriychuk.demo.service.OrderService;
 import com.andriychuk.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     private final ProductService productService;
+    private final OrderService orderService;
+    private final CustomUserDetailsService userService;
     private final CustomUserDetailsService customUserDetailsService;
 
     @GetMapping(value = "/")
@@ -33,8 +38,24 @@ public class IndexController {
     }
 
     @GetMapping(value = "/personal-account")
-    public String getPersonal() {
+    public String getPersonal(Model model) {
+        model.addAttribute("orders", orderService.findAllByUser(userService.findByUserName(getCurrentSessionUserName())));
         return "personal";
     }
 
+    @GetMapping("/create-admin")
+    public String createAdmin() {
+        CustomUser admin = CustomUser.builder()
+                .login("admin")
+                .password("11111")
+                .role(CustomUser.Role.ADMIN)
+                .build();
+        customUserDetailsService.saveAdmin(admin);
+        return "login";
+    }
+
+    private String getCurrentSessionUserName() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
+    }
 }
