@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	  th:fragment="header" lang="en">
 <head>
 	<title>Жасмін</title>
 	<meta charset="utf-8">
@@ -15,23 +18,23 @@
 	<section class="hero">
 		<header>
 			<div class="wrapper">
-				<a href="/"><img src="/img/logo.png" width="30" height="30" class="logo" alt="" titl=""/></a>
+				<a href="/"><img src="/img/logo.png" width="30" height="30" class="logo" alt="" title=""/></a>
 				<a href="/" class="hamburger"></a>
 				<nav>
 					<ul>
-						<li><a href="/personal-account">Акаунт</a></li>
-						<li><a href="/cart">Кошик</a></li>
-						<li th:if="${isAdmin}"><a href="/admin">Панель адміна</a></li>
+						<li sec:authorize="hasAuthority('CUSTOMER')"><a href="/customer/personal-account">Виконані замовлення</a></li>
+						<li sec:authorize="hasAuthority('CUSTOMER')"><a href="/customer/cart">Кошик</a></li>
+						<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/add-customer">Додати клієнта</a></li>
+						<li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/current-orders">Поточні замовлення</a></li>
 					</ul>
-					<a th:if="${user == null}" href="/login" class="login_btn">Логін</a>
-					<a th:if="${user != null}" href="/logout" class="login_btn">Вихід</a>
+					<a sec:authorize="!isAuthenticated()" href="/login" class="login_btn">Логін</a>
+					<a sec:authorize="isAuthenticated()" href="/logout" class="login_btn">Вихід</a>
 				</nav>
 			</div>
 		</header>
 
 			<section class="caption">
 				<h2 class="caption">Знайдіть хімічні засоби мрії</h2>
-				<h3 class="properties">Мило - Шампунь - Туалетна вода</h3>
 			</section>
 	</section><!--  end hero section  -->
 
@@ -41,7 +44,7 @@
 				<li th:each="product : ${products}">
 					<img th:src="${product.getImageUrl()}" alt="" title="" class="property_img"/>
 					<span th:text="${product.getPrice()+'грн'}" class="price"></span>
-					<form class="property_details" th:action="'/add?id='+${product.getId()}" method="POST">
+					<form class="property_details" th:action="'/customer/add?id='+${product.getId()}" method="POST">
 						<h1>
 							<p th:text="${product.getName()}"></p>
 							<p th:if="${product.getProductType().name().equals('UNIVERSAL')}">Універсальні</p>

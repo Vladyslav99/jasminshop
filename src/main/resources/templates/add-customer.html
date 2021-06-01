@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      th:fragment="header" lang="en">
 <head>
     <title>Жасмін</title>
     <meta charset="utf-8">
@@ -25,18 +28,19 @@
 
 </head>
 <body>
-<header style="background: blue">
+<header style="background: blue;">
     <div class="wrapper">
-        <a href="/"><img src="/img/logo.png" class="logo" alt="" titl=""/></a>
+        <a href="/"><img src="/img/logo.png" width="30" height="30" class="logo" alt="" title=""/></a>
         <a href="/" class="hamburger"></a>
         <nav>
             <ul>
-                <li><a href="/personal-account">Account</a></li>
-                <li><a href="/cart">Кошик</a></li>
-                <li th:if="${isAdmin}"><a href="/admin">Admin Panel</a></li>
+                <li sec:authorize="hasAuthority('CUSTOMER')"><a href="/customer/personal-account">Виконані замовлення</a></li>
+                <li sec:authorize="hasAuthority('CUSTOMER')"><a href="/customer/cart">Кошик</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/add-customer">Додати клієнта</a></li>
+                <li sec:authorize="hasAuthority('ADMIN')"><a href="/admin/current-orders">Поточні замовлення</a></li>
             </ul>
-            <a th:if="${user == null}" href="/login" class="login_btn">Login</a>
-            <a th:if="${user != null}" href="/logout" class="login_btn">Logout</a>
+            <a sec:authorize="!isAuthenticated()" href="/login" class="login_btn">Логін</a>
+            <a sec:authorize="isAuthenticated()" href="/logout" class="login_btn">Вихід</a>
         </nav>
     </div>
 </header>
@@ -45,7 +49,7 @@
     <div class="wrapper">
         <ul class="properties_list">
             <li>
-                <h4>New House</h4>
+                <h4>Новий клієнт</h4>
                 <form action="/admin/add-customer" method="post" enctype="multipart/form-data" th:object="${customUserDTO}">
                     <input type="text" class="form-control" id="login" name="login" placeholder="Логін"><br>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"><br>
@@ -54,7 +58,7 @@
                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Номер телефону"><br>
                     <input type="number" class="form-control" id="discount" name="discount" placeholder="Знижка"><br>
 
-                    <button class="btn btn-primary" type="submit">Submit</button><br>
+                    <button class="btn btn-primary" type="submit">Додати</button><br>
                 </form>
             </li>
         </ul>

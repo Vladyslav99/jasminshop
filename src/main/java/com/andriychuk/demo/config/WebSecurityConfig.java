@@ -1,5 +1,6 @@
 package com.andriychuk.demo.config;
 
+import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .antMatchers("/login", "/login-failure")
                     .not().authenticated()
+                .antMatchers("/admin/*")
+                    .hasAnyAuthority(CustomUser.Role.ADMIN.name())
+                .antMatchers("/customer/*")
+                    .hasAnyAuthority(CustomUser.Role.CUSTOMER.name())
                 .and()
                     .formLogin()
                     .loginPage("/login")

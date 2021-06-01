@@ -44,13 +44,13 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping(value = "/cart")
+    @GetMapping(value = "/customer/cart")
     public String getCart(Model model) {
         model.addAttribute("cart", orderService.findByUserAndStatusCreated(userService.findByUserName(getCurrentSessionUserName())));
-        return "card";
+        return "cart";
     }
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/customer/add")
     public String addToCart(@RequestParam Long id) {
         orderService.save(new Order(null, Collections.singletonList(productService.findById(id)),
                 userService.findByUserName(getCurrentSessionUserName()),
@@ -59,14 +59,14 @@ public class IndexController {
         return "redirect:/";
     }
 
-    @PostMapping(value = "/confirm")
+    @PostMapping(value = "/customer/confirm")
     public String confirm() {
         orderService.saveCompletely(userService.findByUserName(getCurrentSessionUserName()));
 
-        return "redirect:/personal-account";
+        return "redirect:/customer/personal-account";
     }
 
-    @GetMapping(value = "/personal-account")
+    @GetMapping(value = "/customer/personal-account")
     public String getPersonal(Model model) {
         model.addAttribute("orders", orderService
                 .findAllByUser(userService

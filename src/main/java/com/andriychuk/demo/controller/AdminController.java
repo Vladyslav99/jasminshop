@@ -3,8 +3,10 @@ package com.andriychuk.demo.controller;
 import com.andriychuk.demo.dto.CustomUserDTO;
 import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.service.CustomUserDetailsService;
+import com.andriychuk.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,18 +19,26 @@ public class AdminController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
-    @GetMapping()
-    public String getAdminPage(@ModelAttribute CustomUserDTO customUserDTO) {
-        return "admin";
+    @Autowired
+    private OrderService orderService;
+
+    @GetMapping("/add-customer")
+    public String getAddCustomerPage(@ModelAttribute CustomUserDTO customUserDTO) {
+        return "add-customer";
     }
 
     @PostMapping("/add-customer")
     public String addCustomer(@ModelAttribute CustomUserDTO customUserDTO) {
-
-
-
         customUserDetailsService.saveCustomer(customUserDTO);
-        return "redirect:/admin";
+        return "redirect:/admin/add-customer";
+    }
+
+    @GetMapping("/current-orders")
+    public String showOrdersPage(Model model) {
+
+
+        model.addAttribute("orders", orderService.findAll());
+        return "admin-orders";
     }
 
 

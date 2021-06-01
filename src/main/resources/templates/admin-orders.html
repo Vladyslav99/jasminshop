@@ -32,35 +32,33 @@
 
 <section class="listings">
     <div class="wrapper">
-        <h1 th:if="${orders.size() == 0}" class="text-center">Немає виконаних замовлень</h1>
-        <h1 th:if="${orders.size() >= 1}">Виконані замовлення</h1>
+        <h1 th:if="${orders.size() == 0}" class="text-center">Немає замовлень</h1>
+        <h1 th:if="${orders.size() >= 1}">Всі замовлення</h1>
         <table th:if="${orders != null && orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
             <tr>
                 <th>Id</th>
                 <th>Адреса</th>
                 <th>Товари</th>
+                <th>Клієнт</th>
             </tr>
             <tr>
                 <th th:text="${order.getId()}"></th>
-                <th th:text="${order.getAddress()   }"></th>
+                <th th:text="${order.getAddress()}"></th>
                 <th>
                     <table>
                         <tr>
-                            <th>Фото</th>
                             <th>Назва</th>
                             <th>Тип</th>
-<!--                            <th>Опис</th>-->
                             <th>Ціна</th>
                         </tr>
                         <tr th:each="product : ${order.getProductList()}">
-                            <th><img th:src="${product.getImageUrl()}" /></th>
                             <th th:text="${product.getName()}">Назва</th>
                             <th th:text="${product.getProductType()}">Тип</th>
-<!--                            <th th:text="${product.getDescription()}">Опис</th>-->
                             <th th:text="${product.getPrice()}">Ціна</th>
                         </tr>
                     </table>
                 </th>
+                <th th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
             </tr>
         </table>
     </div>
