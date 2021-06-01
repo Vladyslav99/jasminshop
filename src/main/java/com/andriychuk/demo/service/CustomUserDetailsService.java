@@ -23,10 +23,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    public CustomUser save(CustomUser customUser) {
+        customUser.setPassword(passwordEncoder.encode(customUser.getPassword()));
+        return customUserRepository.save(customUser);
+    }
+
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        CustomUser customUser = customUserRepository.findByLogin(login)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with login %s not found", login)));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        CustomUser customUser = customUserRepository.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("User with login %s not found", username)));
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(customUser.getRole().name()));
         return new org.springframework.security.core.userdetails.User(customUser.getLogin(),
