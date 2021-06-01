@@ -1,12 +1,9 @@
 package com.andriychuk.demo.controller;
 
-import com.andriychuk.demo.service.ProductService;
 import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.service.CustomUserDetailsService;
+import com.andriychuk.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     private final ProductService productService;
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @GetMapping(value = "/")
     public String getIndex(Model model) {
