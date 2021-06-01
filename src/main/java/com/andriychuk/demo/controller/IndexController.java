@@ -21,11 +21,6 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping(value = "/admin")
-    public String getAdmin() {
-        return "admin";
-    }
-
     @GetMapping(value = "/login")
     public String getLogin() {
         return "login";
@@ -42,15 +37,4 @@ public class IndexController {
         return "personal";
     }
 
-
-    @GetMapping("/create-admin")
-    public String createAdmin() {
-        CustomUser admin = CustomUser.builder()
-                .login("admin")
-                .password("11111")
-                .role(CustomUser.Role.ADMIN)
-                .build();
-        customUserDetailsService.save(admin);
-        return "login";
-    }
 }

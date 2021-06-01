@@ -45,23 +45,19 @@
         <ul class="properties_list">
             <li>
                 <h4>New House</h4>
-                <form action="/admin/new-item" method="post" enctype="multipart/form-data">
-                    <input type="text" class="form-control" name="name" placeholder="Name"><br>
-                    <input type="number" class="form-control" name="price"  placeholder="Price"><br>
-                    <input type="text" class="form-control" name="description"  placeholder="Description"><br>
-                    <input type="file" class="form-control-file" name="image"  placeholder="Image"><br>
+                <form action="/admin/add-customer" method="post" enctype="multipart/form-data" th:object="${customUserDTO}">
+                    <input type="text" class="form-control" id="login" name="login" placeholder="Логін"><br>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"><br>
+                    <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="Адреса доставки"><br>
+                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="ПІБ"><br>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Номер телефону"><br>
+                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Знижка"><br>
+
                     <button class="btn btn-primary" type="submit">Submit</button><br>
                 </form>
             </li>
         </ul>
-        <form action="/admin/delete-item" method="post">
-            <select class="form-control" name="id">
-                <option th:each="house : ${houseList}"
-                        th:text="${house.getName()}"
-                        th:value="${house.getId()}"></option>
-            </select>
-            <button class="btn btn-primary m-3 float-right" type="submit">Delete</button>
-        </form>
+
     </div>
 </section>	<!--  end listing section  -->
 

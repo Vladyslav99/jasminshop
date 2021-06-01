@@ -3,6 +3,7 @@ package com.andriychuk.demo.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -20,6 +21,14 @@ public class CustomUser {
     private String login;
 
     private String password;
+
+    private String shippingAddress;
+
+    private String fullName;
+
+    private String phoneNumber;
+
+    private Float discount;
 
     @Enumerated(EnumType.STRING)
     private CustomUser.Role role;

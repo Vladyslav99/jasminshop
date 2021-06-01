@@ -1,5 +1,6 @@
 package com.andriychuk.demo.service;
 
+import com.andriychuk.demo.dto.CustomUserDTO;
 import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.repository.CustomUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,21 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public CustomUser save(CustomUser customUser) {
+    public CustomUser saveAdmin(CustomUser customUser) {
         customUser.setPassword(passwordEncoder.encode(customUser.getPassword()));
         return customUserRepository.save(customUser);
+    }
+
+    public CustomUser saveCustomer(CustomUserDTO customUserDTO) {
+        return customUserRepository.save(CustomUser.builder()
+                .login(customUserDTO.getLogin())
+                .password(passwordEncoder.encode(customUserDTO.getPassword()))
+                .fullName(customUserDTO.getFullName())
+                .phoneNumber(customUserDTO.getPhoneNumber())
+                .shippingAddress(customUserDTO.getShippingAddress())
+                .discount(customUserDTO.getDiscount())
+                .role(CustomUser.Role.CUSTOMER)
+                .build());
     }
 
     @Override
