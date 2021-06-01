@@ -46,7 +46,7 @@ public class IndexController {
     @GetMapping(value = "/cart")
     public String getCart(Model model) {
         model.addAttribute("cart", orderService.findByUserAndStatusCreated(userService.findByUserName(getCurrentSessionUserName())));
-        return "/card";
+        return "card";
     }
 
     @PostMapping(value = "/add")
@@ -55,7 +55,14 @@ public class IndexController {
                 userService.findByUserName(getCurrentSessionUserName()),
                 "", OrderStatus.CREATED));
 
-        return "/";
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/confirm")
+    public String confirm() {
+        orderService.saveCompletely(userService.findByUserName(getCurrentSessionUserName()));
+
+        return "redirect:/personal-account";
     }
 
     @GetMapping(value = "/personal-account")

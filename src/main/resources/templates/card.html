@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/main_login.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -27,18 +28,18 @@
 </header>
 
 <section class="listings">
-    <div class="wrapper">
+    <form class="wrapper" action="/confirm" method="POST">
         <h1>Кошик</h1>
-        <table th:if="${orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
+        <table th:if="${cart != null}" class="properties_list">
             <tr>
                 <th>Id</th>
                 <th>Адреса</th>
                 <th>Товари</th>
             </tr>
             <tr>
-                <th th:text="cart.getId()"></th>
-                <th th:text="cart.getAddress()"></th>
-                <th th:each="product : ${cart.getProductList()}">
+                <th th:text="${cart.getId()}"></th>
+                <th th:text="${cart.getAddress()}"></th>
+                <th>
                     <table>
                         <tr>
                             <th>Фото</th>
@@ -47,7 +48,7 @@
                             <th>Опис</th>
                             <th>Ціна</th>
                         </tr>
-                        <tr>
+                        <tr th:each="product : ${cart.getProductList()}">
                             <th><img th:src="${product.getImageUrl()}" /></th>
                             <th th:text="${product.getName()}">Назва</th>
                             <th th:text="${product.getProductType()}">Тип</th>
@@ -58,7 +59,8 @@
                 </th>
             </tr>
         </table>
-    </div>
+        <button type="submit" class="login100-form-btn m-t-20" th:if="${cart != null}">Оформити замовлення</button>
+    </form>
 </section>
 
 <footer>

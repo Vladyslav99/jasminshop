@@ -18,7 +18,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany
+    @ManyToMany
     private List<Product> productList;
 
     @OneToOne

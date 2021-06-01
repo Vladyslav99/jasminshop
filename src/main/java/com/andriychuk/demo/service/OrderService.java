@@ -18,7 +18,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public Order save(Order order) {
-        Order notDoneOrder = orderRepository.findByUserAndOrderStatus(order.getUser(), OrderStatus.CREATED);
+        Order notDoneOrder = orderRepository.findOrderByUserAndOrderStatus(order.getUser(), OrderStatus.CREATED);
         if (notDoneOrder != null) {
             List<Product> list = notDoneOrder.getProductList();
             list.add(order.getProductList().get(0));
@@ -31,13 +31,13 @@ public class OrderService {
     }
 
     public Order findByUserAndStatusCreated(CustomUser user) {
-        return orderRepository.findByUserAndOrderStatus(user, OrderStatus.CREATED);
+        return orderRepository.findOrderByUserAndOrderStatus(user, OrderStatus.CREATED);
     }
 
     public Order saveCompletely(CustomUser user) {
-       Order notDoneOrder = orderRepository.findByUserAndOrderStatus(user, OrderStatus.CREATED);
+       Order notDoneOrder = orderRepository.findOrderByUserAndOrderStatus(user, OrderStatus.CREATED);
        notDoneOrder.setOrderStatus(OrderStatus.NOT_DONE);
-       notDoneOrder.setAddress(user.getAddress());
+       notDoneOrder.setAddress(user.getShippingAddress());
        return orderRepository.save(notDoneOrder);
     }
 

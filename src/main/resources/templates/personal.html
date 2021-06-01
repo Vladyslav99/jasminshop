@@ -37,9 +37,9 @@
                 <th>Товари</th>
             </tr>
             <tr>
-                <th th:text="order.getId()"></th>
-                <th th:text="order.getName()"></th>
-                <th th:each="product : ${order.getProductList()}">
+                <th th:text="${order.getId()}"></th>
+                <th th:text="${order.getAddress()   }"></th>
+                <th>
                     <table>
                         <tr>
                             <th>Фото</th>
@@ -48,7 +48,7 @@
                             <th>Опис</th>
                             <th>Ціна</th>
                         </tr>
-                        <tr>
+                        <tr th:each="product : ${order.getProductList()}">
                             <th><img th:src="${product.getImageUrl()}" /></th>
                             <th th:text="${product.getName()}">Назва</th>
                             <th th:text="${product.getProductType()}">Тип</th>
