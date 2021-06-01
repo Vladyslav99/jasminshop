@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -67,7 +68,12 @@ public class IndexController {
 
     @GetMapping(value = "/personal-account")
     public String getPersonal(Model model) {
-        model.addAttribute("orders", orderService.findAllByUser(userService.findByUserName(getCurrentSessionUserName())));
+        model.addAttribute("orders", orderService
+                .findAllByUser(userService
+                        .findByUserName(getCurrentSessionUserName()))
+                .stream()
+                .filter(i -> i.getOrderStatus() != OrderStatus.CREATED)
+                .collect(Collectors.toList()));
         return "personal";
     }
 

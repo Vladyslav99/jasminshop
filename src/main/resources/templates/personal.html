@@ -30,7 +30,7 @@
     <div class="wrapper">
         <h1 th:if="${orders.size() == 0}" class="text-center">Немає виконаних замовлень</h1>
         <h1 th:if="${orders.size() >= 1}">Виконані замовлення</h1>
-        <table th:if="${orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
+        <table th:if="${orders != null && orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
             <tr>
                 <th>Id</th>
                 <th>Адреса</th>
