@@ -41,7 +41,7 @@
 				<li th:each="product : ${products}">
 					<img th:src="${product.getImageUrl()}" alt="" title="" class="property_img"/>
 					<span th:text="${product.getPrice()+'грн'}" class="price"></span>
-					<div class="property_details">
+					<form class="property_details" th:action="'/add?id='+${product.getId()}" method="POST">
 						<h1>
 							<p th:text="${product.getName()}"></p>
 							<p th:if="${product.getProductType().name().equals('UNIVERSAL')}">Універсальні</p>
@@ -50,7 +50,7 @@
 						</h1>
 						<h2 th:text="${product.getDescription()}"></h2>
 						<button class="login100-form-btn m-t-20">Додати в кошик</button>
-					</div>
+					</form>
 				</li>
 			</ul>
 		</div>
