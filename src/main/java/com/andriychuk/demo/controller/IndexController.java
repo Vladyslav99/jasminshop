@@ -37,7 +37,7 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping(value = "/personal")
+    @GetMapping(value = "/personal-account")
     public String getPersonal() {
         return "personal";
     }
