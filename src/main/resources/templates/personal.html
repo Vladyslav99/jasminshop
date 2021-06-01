@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>La Casa - Real Estate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<header style="background: blue">
+    <div class="wrapper">
+        <a href="/"><img src="/img/logo.png" class="logo" alt="" titl=""/></a>
+        <a href="/" class="hamburger"></a>
+        <nav>
+            <ul>
+                <li><a href="/personal-account">Account</a></li>
+                <li th:if="${isAdmin}"><a href="/admin">Admin Panel</a></li>
+            </ul>
+            <a th:if="${user == null}" href="/login" class="login_btn">Login</a>
+            <a th:if="${user != null}" href="/logout" class="login_btn">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<section class="listings">
+    <div class="wrapper">
+        <h1 th:if="${houseList.size() == 0}" class="text-center">No rented houses history available</h1>
+        <h1 th:if="${houseList.size() >= 1}">Rented houses</h1>
+        <ul th:if="${houseList.size() >= 1}" class="properties_list">
+            <li th:each="house : ${houseList}">
+                <a th:href="'/house/'+${house.getHouse().getId()}">
+                    <img th:src="'/'+${house.getHouse().getImg()}" alt="" title="" class="property_img"/>
+                </a>
+                <span th:text="${house.getHouse().getPrice()+'$'}" class="price"></span>
+                <div class="property_details">
+                    <h1>
+                        <a th:text="${house.getHouse().getName()}" th:href="'/house/'+${house.getId()}"></a>
+                    </h1>
+                    <h2 th:text="${house.getHouse().getDesription()}"></h2>
+                    <h3 th:text="${'From: ' + house.getDateFrom()}"></h3>
+                    <h3 th:text="${'To: ' + house.getDateTo()}"></h3>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<footer>
+    <div class="copyrights wrapper">
+        © 2021
+    </div>
+</footer><!--  end footer  -->
+
+</body>
+</html>

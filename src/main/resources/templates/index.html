@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<title>Жасмін</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/css/responsive.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+
+	<section class="hero">
+		<header>
+			<div class="wrapper">
+				<a href="#"><img src="/img/logo.png" width="30" height="30" class="logo" alt="" titl=""/></a>
+				<a href="#" class="hamburger"></a>
+				<nav>
+					<ul>
+						<li><a href="/personal-account">Акаунт</a></li>
+						<li th:if="${isAdmin}"><a href="/admin">Панель адміна</a></li>
+					</ul>
+					<a th:if="${user == null}" href="/login" class="login_btn">Логін</a>
+					<a th:if="${user != null}" href="/logout" class="login_btn">Вихід</a>
+				</nav>
+			</div>
+		</header>
+
+			<section class="caption">
+				<h2 class="caption">Знайдіть мило своєї мрії</h2>
+				<h3 class="properties">Мило - Шампунь - Туалетна вода</h3>
+			</section>
+	</section><!--  end hero section  -->
+
+	<section class="listings">
+		<div class="wrapper">
+			<ul class="properties_list">
+				<li th:each="house : ${houseList}">
+					<a th:href="'/house/'+${house.getId()}">
+						<img th:src="'/'+${house.getImg()}" alt="" title="" class="property_img"/>
+					</a>
+					<span th:text="${house.getPrice()+'грн'}" class="price"></span>
+					<div class="property_details">
+						<h1>
+							<a th:text="${house.getName()}" th:href="'/house/'+${house.getId()}"></a>
+						</h1>
+						<h2 th:text="${house.getDesription()}"></h2>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</section>	<!--  end listing section  -->
+
+	<footer>
+		<div class="copyrights wrapper">
+			© 2021
+		</div>
+	</footer><!--  end footer  -->
+	
+</body>
+</html>
