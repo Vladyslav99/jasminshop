@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>La Casa - Real Estate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header style="background: blue">
+    <div class="wrapper">
+        <a href="/"><img src="/img/logo.png" class="logo" alt="" titl=""/></a>
+        <a href="/" class="hamburger"></a>
+        <nav>
+            <ul>
+                <li><a href="/personal-account">Account</a></li>
+                <li th:if="${isAdmin}"><a href="/admin">Admin Panel</a></li>
+            </ul>
+            <a th:if="${user == null}" href="/login" class="login_btn">Login</a>
+            <a th:if="${user != null}" href="/logout" class="login_btn">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<section class="listings">
+    <div class="wrapper">
+        <ul class="properties_list">
+            <li>
+                <h4>New House</h4>
+                <form action="/admin/new-item" method="post" enctype="multipart/form-data">
+                    <input type="text" class="form-control" name="name" placeholder="Name"><br>
+                    <input type="number" class="form-control" name="price"  placeholder="Price"><br>
+                    <input type="text" class="form-control" name="description"  placeholder="Description"><br>
+                    <input type="file" class="form-control-file" name="image"  placeholder="Image"><br>
+                    <button class="btn btn-primary" type="submit">Submit</button><br>
+                </form>
+            </li>
+        </ul>
+        <form action="/admin/delete-item" method="post">
+            <select class="form-control" name="id">
+                <option th:each="house : ${houseList}"
+                        th:text="${house.getName()}"
+                        th:value="${house.getId()}"></option>
+            </select>
+            <button class="btn btn-primary m-3 float-right" type="submit">Delete</button>
+        </form>
+    </div>
+</section>	<!--  end listing section  -->
+
+<footer>
+    <div class="copyrights wrapper">
+        Copyright © 2020 All Rights Reserved.
+    </div>
+</footer><!--  end footer  -->
+
+</body>
+</html>
