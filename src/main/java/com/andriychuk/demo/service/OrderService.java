@@ -1,9 +1,9 @@
 package com.andriychuk.demo.service;
 
+import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.entity.Order;
 import com.andriychuk.demo.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Order> findAllByUser(User user) {
+    public List<Order> findAllByUser(CustomUser user) {
         return orderRepository.findAllByUser(user);
     }
 }
