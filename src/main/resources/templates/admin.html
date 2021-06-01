@@ -32,6 +32,7 @@
         <nav>
             <ul>
                 <li><a href="/personal-account">Account</a></li>
+                <li><a href="/cart">Кошик</a></li>
                 <li th:if="${isAdmin}"><a href="/admin">Admin Panel</a></li>
             </ul>
             <a th:if="${user == null}" href="/login" class="login_btn">Login</a>

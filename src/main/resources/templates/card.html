@@ -28,8 +28,7 @@
 
 <section class="listings">
     <div class="wrapper">
-        <h1 th:if="${orders.size() == 0}" class="text-center">Немає виконаних замовлень</h1>
-        <h1 th:if="${orders.size() >= 1}">Виконані замовлення</h1>
+        <h1>Кошик</h1>
         <table th:if="${orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
             <tr>
                 <th>Id</th>
@@ -37,9 +36,9 @@
                 <th>Товари</th>
             </tr>
             <tr>
-                <th th:text="order.getId()"></th>
-                <th th:text="order.getName()"></th>
-                <th th:each="product : ${order.getProductList()}">
+                <th th:text="cart.getId()"></th>
+                <th th:text="cart.getAddress()"></th>
+                <th th:each="product : ${cart.getProductList()}">
                     <table>
                         <tr>
                             <th>Фото</th>

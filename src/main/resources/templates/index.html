@@ -15,11 +15,12 @@
 	<section class="hero">
 		<header>
 			<div class="wrapper">
-				<a href="#"><img src="/img/logo.png" width="30" height="30" class="logo" alt="" titl=""/></a>
-				<a href="#" class="hamburger"></a>
+				<a href="/"><img src="/img/logo.png" width="30" height="30" class="logo" alt="" titl=""/></a>
+				<a href="/" class="hamburger"></a>
 				<nav>
 					<ul>
 						<li><a href="/personal-account">Акаунт</a></li>
+						<li><a href="/cart">Кошик</a></li>
 						<li th:if="${isAdmin}"><a href="/admin">Панель адміна</a></li>
 					</ul>
 					<a th:if="${user == null}" href="/login" class="login_btn">Логін</a>

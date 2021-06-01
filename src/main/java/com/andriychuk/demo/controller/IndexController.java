@@ -1,6 +1,8 @@
 package com.andriychuk.demo.controller;
 
 import com.andriychuk.demo.entity.CustomUser;
+import com.andriychuk.demo.entity.Order;
+import com.andriychuk.demo.enums.OrderStatus;
 import com.andriychuk.demo.service.CustomUserDetailsService;
 import com.andriychuk.demo.service.OrderService;
 import com.andriychuk.demo.service.ProductService;
@@ -10,6 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Collections;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,6 +46,21 @@ public class IndexController {
     public String getLoginFailureMessage(Model model) {
         model.addAttribute("error", true);
         return "login";
+    }
+
+    @GetMapping(value = "/cart")
+    public String getCart(Model model) {
+        model.addAttribute("cart", orderService.findByUserAndStatusCreated(userService.findByUserName(getCurrentSessionUserName())));
+        return "/card";
+    }
+
+    @PostMapping(value = "/add")
+    public String addToCart(@RequestParam Long id) {
+        orderService.save(new Order(null, Collections.singletonList(productService.findById(id)),
+                userService.findByUserName(getCurrentSessionUserName()),
+                "", OrderStatus.CREATED));
+
+        return "/";
     }
 
     @GetMapping(value = "/personal-account")

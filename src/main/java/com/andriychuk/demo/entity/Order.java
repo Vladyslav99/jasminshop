@@ -1,5 +1,6 @@
 package com.andriychuk.demo.entity;
 
+import com.andriychuk.demo.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,7 @@ public class Order {
 
     @Column(name = "address", columnDefinition = "TEXT")
     private String address;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 }
