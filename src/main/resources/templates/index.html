@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
 	<link rel="stylesheet" type="text/css" href="/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/css/responsive.css">
+	<link rel="stylesheet" type="text/css" href="/css/main_login.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -28,7 +29,7 @@
 		</header>
 
 			<section class="caption">
-				<h2 class="caption">Знайдіть хімічні засоби своєї мрії</h2>
+				<h2 class="caption">Знайдіть хімічні засоби мрії</h2>
 				<h3 class="properties">Мило - Шампунь - Туалетна вода</h3>
 			</section>
 	</section><!--  end hero section  -->
@@ -36,16 +37,18 @@
 	<section class="listings">
 		<div class="wrapper">
 			<ul class="properties_list">
-				<li th:each="house : ${houseList}">
-					<a th:href="'/house/'+${house.getId()}">
-						<img th:src="'/'+${house.getImg()}" alt="" title="" class="property_img"/>
-					</a>
-					<span th:text="${house.getPrice()+'грн'}" class="price"></span>
+				<li th:each="product : ${products}">
+					<img th:src="${product.getImageUrl()}" alt="" title="" class="property_img"/>
+					<span th:text="${product.getPrice()+'грн'}" class="price"></span>
 					<div class="property_details">
 						<h1>
-							<a th:text="${house.getName()}" th:href="'/house/'+${house.getId()}"></a>
+							<p th:text="${product.getName()}"></p>
+							<p th:if="${product.getProductType().name().equals('UNIVERSAL')}">Універсальні</p>
+							<p th:if="${product.getProductType().name().equals('FLOOR_CLEANERS')}">Для підлоги</p>
+							<p th:if="${product.getProductType().name().equals('CHEMICAL_FERTILIZERS')}">Хімічні добрива</p>
 						</h1>
-						<h2 th:text="${house.getDesription()}"></h2>
+						<h2 th:text="${product.getDescription()}"></h2>
+						<button class="login100-form-btn m-t-20">Додати в кошик</button>
 					</div>
 				</li>
 			</ul>

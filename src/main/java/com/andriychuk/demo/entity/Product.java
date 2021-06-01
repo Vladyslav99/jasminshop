@@ -24,8 +24,11 @@ public class Product {
     private ProductType productType;
 
     @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @Column(name = "image")
+    private String imageUrl;
 
     @Column(name = "price")
     private BigDecimal price;

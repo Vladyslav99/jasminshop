@@ -1,15 +1,20 @@
 package com.andriychuk.demo.controller;
 
+import com.andriychuk.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
 public class IndexController {
 
+    private final ProductService productService;
+
     @GetMapping(value = "/")
-    public String getIndex() {
+    public String getIndex(Model model) {
+        model.addAttribute("products", productService.findAll());
         return "index";
     }
 

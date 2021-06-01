@@ -22,4 +22,7 @@ public class Order {
 
     @OneToOne
     private CustomUser user;
+
+    @Column(name = "address", columnDefinition = "TEXT")
+    private String address;
 }
