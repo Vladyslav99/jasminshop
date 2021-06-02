@@ -61,7 +61,7 @@
                             </tr>
                         </table>
                     </th>
-                    <th th:if="order != null && order.user != null" th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
+                    <th th:if="order.user != null" th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
                     <th th:if="totalPrice != null" th:text="${totalPrice[iter.index]}"></th>
                 </tr>
             </table>
