@@ -33,10 +33,10 @@
 
 <section class="listings">
     <div class="wrapper">
-        <h1 th:if="${orders != null && orders.size() == 0}" class="text-center">Немає замовлень</h1>
-        <h1 th:if="${orders != null && orders.size() >= 1}">Всі замовлення</h1>
+        <h1 th:if="${orders.size() == 0}" class="text-center">Немає замовлень</h1>
+        <h1 th:if="${orders.size() >= 1}">Всі замовлення</h1>
         <div class="table-wrapper">
-            <table th:if="${orders != null && orders.size() >= 1}" class="fl-table" th:each="order, iter : ${orders}">
+            <table th:if="${orders.size() >= 1}" class="fl-table" th:each="order, iter : ${orders}">
                 <tr>
                     <th>Id</th>
                     <th>Адреса</th>
