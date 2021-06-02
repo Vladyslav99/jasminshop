@@ -46,7 +46,16 @@ public class IndexController {
 
     @GetMapping(value = "/customer/cart")
     public String getCart(Model model) {
-        model.addAttribute("cart", orderService.findByUserAndStatusCreated(userService.findByUserName(getCurrentSessionUserName())));
+        CustomUser user = userService.findByUserName(getCurrentSessionUserName());
+        Order order = orderService.findByUserAndStatusCreated(user);
+        model.addAttribute("cart", order);
+        if (order != null) {
+            model.addAttribute("totalPrice", Math.ceil(order.getProductList()
+                    .stream()
+                    .mapToInt(i -> i.getPrice().intValue())
+                    .sum() * (100 - user.getDiscount()) / 100.0));
+            model.addAttribute("discount", user.getDiscount());
+        }
         return "cart";
     }
 
@@ -62,7 +71,6 @@ public class IndexController {
     @PostMapping(value = "/customer/confirm")
     public String confirm() {
         orderService.saveCompletely(userService.findByUserName(getCurrentSessionUserName()));
-
         return "redirect:/customer/personal-account";
     }
 
@@ -74,6 +82,12 @@ public class IndexController {
                 .stream()
                 .filter(i -> i.getOrderStatus() != OrderStatus.CREATED)
                 .collect(Collectors.toList()));
+        model.addAttribute("totalPrice", orderService
+                .findAllByUser(userService
+                        .findByUserName(getCurrentSessionUserName()))
+                .stream()
+                .mapToInt(i -> i.getProductList().stream().mapToInt(j -> (int) (j.getPrice().intValue() * (100 - userService.findByUserName(getCurrentSessionUserName()).getDiscount()) / 100)).sum())
+                .toArray());
         return "personal";
     }
 

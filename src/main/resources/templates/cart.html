@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="css/main_login.css">
+    <link rel="stylesheet" type="text/css" href="/css/main_login.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -32,39 +33,42 @@
 </header>
 
 <section class="listings">
-    <form class="wrapper" action="/customer/confirm" method="POST">
-        <h1>Кошик</h1>
-        <table th:if="${cart != null}" class="properties_list">
-            <tr>
-                <th>Id</th>
-                <th>Адреса</th>
-                <th>Товари</th>
-            </tr>
-            <tr>
-                <th th:text="${cart.getId()}"></th>
-                <th th:text="${cart.getAddress()}"></th>
-                <th>
-                    <table>
-                        <tr>
-                            <th>Фото</th>
-                            <th>Назва</th>
-                            <th>Тип</th>
-                            <th>Опис</th>
-                            <th>Ціна</th>
-                        </tr>
-                        <tr th:each="product : ${cart.getProductList()}">
-                            <th><img th:src="${product.getImageUrl()}" /></th>
-                            <th th:text="${product.getName()}">Назва</th>
-                            <th th:text="${product.getProductType()}">Тип</th>
-                            <th th:text="${product.getDescription()}">Опис</th>
-                            <th th:text="${product.getPrice()}">Ціна</th>
-                        </tr>
-                    </table>
-                </th>
-            </tr>
-        </table>
-        <button type="submit" class="login100-form-btn m-t-20" th:if="${cart != null}">Оформити замовлення</button>
-    </form>
+    <div class="wrapper">
+        <form action="/customer/confirm" method="POST">
+            <h1>Кошик</h1>
+            <div class="table-wrapper">
+            <table th:if="${cart != null}" class="fl-table">
+                <tr>
+                    <th>Id</th>
+                    <th>Адреса</th>
+                    <th>Товари</th>
+                </tr>
+                <tr>
+                    <td th:text="${cart.getId()}"></td>
+                    <td th:text="${cart.getAddress()}"></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th>Фото</th>
+                                <th>Назва</th>
+                                <th>Тип</th>
+                                <th>Ціна</th>
+                            </tr>
+                            <tr th:each="product : ${cart.getProductList()}">
+                                <td><img width="150px" height="150px" th:src="${product.getImageUrl()}" /></td>
+                                <td th:text="${product.getName()}">Назва</td>
+                                <td th:text="${product.getProductType()}">Тип</td>
+                                <td th:text="${product.getPrice()}">Ціна</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <p th:if="${cart != null}">Загальна ціна (з урахуванням знижки в <span th:text="${discount}+'%'"></span>): <span th:text="${totalPrice}"></span></p>
+            <button type="submit" class="login100-form-btn m-t-20" th:if="${cart != null}">Оформити замовлення</button>
+        </form>
+    </div>
 </section>
 
 <footer>

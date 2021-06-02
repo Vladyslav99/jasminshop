@@ -35,14 +35,16 @@ public class AdminController {
 
     @GetMapping("/current-orders")
     public String showOrdersPage(Model model) {
-
-
         model.addAttribute("orders", orderService.findAll());
+        model.addAttribute("totalPrice", orderService.findAll()
+                .stream()
+                .mapToInt(i -> i.getProductList()
+                        .stream()
+                        .mapToInt(j -> (int) (j.getPrice().intValue() * (100 - (i.getUser().getDiscount() != null ? i.getUser().getDiscount() : 0)) / 100))
+                        .sum())
+                .toArray());
         return "admin-orders";
     }
-
-
-
 
     @GetMapping("/create-admin")
     public String createAdmin() {

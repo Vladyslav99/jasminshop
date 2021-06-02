@@ -47,22 +47,17 @@
 
 <section class="listings">
     <div class="wrapper">
-        <ul class="properties_list">
-            <li>
-                <h4>Новий клієнт</h4>
-                <form action="/admin/add-customer" method="post" enctype="multipart/form-data" th:object="${customUserDTO}">
-                    <input type="text" class="form-control" id="login" name="login" placeholder="Логін"><br>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"><br>
-                    <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="Адреса доставки"><br>
-                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="ПІБ"><br>
-                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Номер телефону"><br>
-                    <input type="number" class="form-control" id="discount" name="discount" placeholder="Знижка"><br>
+        <h4>Новий клієнт</h4>
+        <form action="/admin/add-customer" method="post" enctype="multipart/form-data" th:object="${customUserDTO}">
+            <input type="text" class="form-control" id="login" name="login" placeholder="Логін"><br>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"><br>
+            <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" placeholder="Адреса доставки"><br>
+            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="ПІБ"><br>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Номер телефону"><br>
+            <input type="number" class="form-control" id="discount" name="discount" placeholder="Знижка"><br>
 
-                    <button class="btn btn-primary" type="submit">Додати</button><br>
-                </form>
-            </li>
-        </ul>
-
+            <button class="btn btn-primary" type="submit">Додати</button><br>
+        </form>
     </div>
 </section>	<!--  end listing section  -->
 

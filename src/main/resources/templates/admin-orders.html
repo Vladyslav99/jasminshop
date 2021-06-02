@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -34,33 +35,37 @@
     <div class="wrapper">
         <h1 th:if="${orders.size() == 0}" class="text-center">Немає замовлень</h1>
         <h1 th:if="${orders.size() >= 1}">Всі замовлення</h1>
-        <table th:if="${orders != null && orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
-            <tr>
-                <th>Id</th>
-                <th>Адреса</th>
-                <th>Товари</th>
-                <th>Клієнт</th>
-            </tr>
-            <tr>
-                <th th:text="${order.getId()}"></th>
-                <th th:text="${order.getAddress()}"></th>
-                <th>
-                    <table>
-                        <tr>
-                            <th>Назва</th>
-                            <th>Тип</th>
-                            <th>Ціна</th>
-                        </tr>
-                        <tr th:each="product : ${order.getProductList()}">
-                            <th th:text="${product.getName()}">Назва</th>
-                            <th th:text="${product.getProductType()}">Тип</th>
-                            <th th:text="${product.getPrice()}">Ціна</th>
-                        </tr>
-                    </table>
-                </th>
-                <th th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
-            </tr>
-        </table>
+        <div class="table-wrapper">
+            <table th:if="${orders != null && orders.size() >= 1}" class="fl-table" th:each="order, iter : ${orders}">
+                <tr>
+                    <th>Id</th>
+                    <th>Адреса</th>
+                    <th>Товари</th>
+                    <th>Клієнт</th>
+                    <th>Загальна вартість</th>
+                </tr>
+                <tr>
+                    <th th:text="${order.getId()}"></th>
+                    <th th:text="${order.getAddress()}"></th>
+                    <th>
+                        <table class="fl-table">
+                            <tr>
+                                <th>Назва</th>
+                                <th>Тип</th>
+                                <th>Ціна</th>
+                            </tr>
+                            <tr th:each="product : ${order.getProductList()}">
+                                <th th:text="${product.getName()}">Назва</th>
+                                <th th:text="${product.getProductType()}">Тип</th>
+                                <th th:text="${product.getPrice()}">Ціна</th>
+                            </tr>
+                        </table>
+                    </th>
+                    <th th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
+                    <th th:text="${totalPrice[iter.index]}"></th>
+                </tr>
+            </table>
+        </div>
     </div>
 </section>
 

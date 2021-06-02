@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/css/reset.css">
     <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -34,16 +35,18 @@
     <div class="wrapper">
         <h1 th:if="${orders.size() == 0}" class="text-center">Немає виконаних замовлень</h1>
         <h1 th:if="${orders.size() >= 1}">Виконані замовлення</h1>
-        <table th:if="${orders != null && orders.size() >= 1}" class="properties_list" th:each="order : ${orders}">
+        <div class="table-wrapper">
+        <table th:if="${orders != null && orders.size() >= 1}" class="fl-table" th:each="order,iter : ${orders}">
             <tr>
                 <th>Id</th>
                 <th>Адреса</th>
                 <th>Товари</th>
+                <th>Загальна ціна</th>
             </tr>
             <tr>
-                <th th:text="${order.getId()}"></th>
-                <th th:text="${order.getAddress()   }"></th>
-                <th>
+                <td th:text="${order.getId()}"></td>
+                <td th:text="${order.getAddress()   }"></td>
+                <td>
                     <table>
                         <tr>
                             <th>Фото</th>
@@ -53,16 +56,18 @@
                             <th>Ціна</th>
                         </tr>
                         <tr th:each="product : ${order.getProductList()}">
-                            <th><img th:src="${product.getImageUrl()}" /></th>
-                            <th th:text="${product.getName()}">Назва</th>
-                            <th th:text="${product.getProductType()}">Тип</th>
+                            <td><img width="150px" height="150px" th:src="${product.getImageUrl()}" /></td>
+                            <td th:text="${product.getName()}">Назва</td>
+                            <td th:text="${product.getProductType()}">Тип</td>
 <!--                            <th th:text="${product.getDescription()}">Опис</th>-->
-                            <th th:text="${product.getPrice()}">Ціна</th>
+                            <td th:text="${product.getPrice()}">Ціна</td>
                         </tr>
                     </table>
-                </th>
+                </td>
+                <td th:text="${totalPrice[iter.index]}"></td>
             </tr>
         </table>
+        </div>
     </div>
 </section>
 
