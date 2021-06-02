@@ -2,6 +2,7 @@ package com.andriychuk.demo.controller;
 
 import com.andriychuk.demo.entity.CustomUser;
 import com.andriychuk.demo.entity.Order;
+import com.andriychuk.demo.entity.Product;
 import com.andriychuk.demo.enums.OrderStatus;
 import com.andriychuk.demo.service.CustomUserDetailsService;
 import com.andriychuk.demo.service.OrderService;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -61,8 +64,9 @@ public class IndexController {
 
     @PostMapping(value = "/customer/add")
     public String addToCart(@RequestParam Long id) {
-        orderService.save(new Order(null, Collections.singletonList(productService.findById(id)),
-                userService.findByUserName(getCurrentSessionUserName()),
+        List<Product> list = new ArrayList<>();
+        list.add(productService.findById(id));
+        orderService.save(new Order(null, list, userService.findByUserName(getCurrentSessionUserName()),
                 "", OrderStatus.CREATED));
 
         return "redirect:/";
