@@ -23,8 +23,7 @@ public class Product {
     @Enumerated(value = EnumType.STRING)
     private ProductType productType;
 
-    @Lob
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "VARCHAR(4085)")
     private String description;
 
     @Column(name = "image")
