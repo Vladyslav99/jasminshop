@@ -33,8 +33,8 @@
 
 <section class="listings">
     <div class="wrapper">
-        <h1 th:if="${orders.size() == 0}" class="text-center">Немає замовлень</h1>
-        <h1 th:if="${orders.size() >= 1}">Всі замовлення</h1>
+        <h1 th:if="${orders != null && orders.size() == 0}" class="text-center">Немає замовлень</h1>
+        <h1 th:if="${orders != null && orders.size() >= 1}">Всі замовлення</h1>
         <div class="table-wrapper">
             <table th:if="${orders != null && orders.size() >= 1}" class="fl-table" th:each="order, iter : ${orders}">
                 <tr>
@@ -61,8 +61,8 @@
                             </tr>
                         </table>
                     </th>
-                    <th th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
-                    <th th:text="${totalPrice[iter.index]}"></th>
+                    <th th:if="order != null && order.user != null" th:text="${order.user.fullName} + '  ' + ${order.user.phoneNumber}"></th>
+                    <th th:if="totalPrice != null" th:text="${totalPrice[iter.index]}"></th>
                 </tr>
             </table>
         </div>

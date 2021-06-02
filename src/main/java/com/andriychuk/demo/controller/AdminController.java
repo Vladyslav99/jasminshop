@@ -36,6 +36,7 @@ public class AdminController {
     @GetMapping("/current-orders")
     public String showOrdersPage(Model model) {
         model.addAttribute("orders", orderService.findAll());
+        if (orderService.findAll() != null){
         model.addAttribute("totalPrice", orderService.findAll()
                 .stream()
                 .mapToInt(i -> i.getProductList()
@@ -43,6 +44,7 @@ public class AdminController {
                         .mapToInt(j -> (int) (j.getPrice().intValue() * (100 - (i.getUser().getDiscount() != null ? i.getUser().getDiscount() : 0)) / 100))
                         .sum())
                 .toArray());
+        }
         return "admin-orders";
     }
 
